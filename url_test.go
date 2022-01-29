@@ -52,3 +52,37 @@ func TestParse(t *testing.T) {
 		})
 	}
 }
+
+func TestURLPort(t *testing.T) {
+	tt := []struct {
+		name string
+		in   string
+		want string
+	}{
+		{
+			name: "empty",
+			in:   "",
+			want: "",
+		},
+		{
+			name: "no port",
+			in:   "example.com",
+			want: "",
+		},
+		{
+			name: "port number",
+			in:   "example.com:80",
+			want: "80",
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			u := &URL{Host: tc.in}
+
+			if got := u.Port(); got != tc.want {
+				t.Errorf("got %v, want %v", got, tc.want)
+			}
+		})
+	}
+}

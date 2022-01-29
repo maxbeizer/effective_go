@@ -30,3 +30,13 @@ func Parse(rawURL string) (*URL, error) {
 	}
 	return &URL{Scheme: scheme, Host: host, Path: path}, nil
 }
+
+func (u *URL) Port() string {
+	i := strings.Index(u.Host, ":")
+
+	if i < 0 {
+		return ""
+	}
+
+	return u.Host[i+1:]
+}
